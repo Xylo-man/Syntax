@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14151b">
+  <meta name="description" content="Make your next Discord message look right. Format text, create localised timestamps, and copy ready-to-post messages.">
+  <title>Discord Syntax — A little syntax. A better message.</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/style.css">
+  <script src="./assets/vendor/luxon-3.7.2.min.js" defer></script>
+  <script src="./assets/js/app.js" type="module"></script>
+</head>
+<body>
+  <a class="skip" href="#workspace">Skip to tools</a>
+  <header class="site-header wrap">
+    <a class="brand" href="./" aria-label="Discord Syntax home"><span class="brand-mark" aria-hidden="true">&lt;/&gt;</span><span>discord<span class="brand-light">syntax</span><span class="brand-dot">.</span></span></a>
+    <div class="header-note"><span class="status-dot"></span> Your message, upgraded.</div>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow"><span class="tiny-star" aria-hidden="true">✦</span> THE LITTLE TOOLKIT FOR YOUR NEXT MESSAGE</div>
+      <h1>A little syntax.<br>A <span>better message.</span></h1>
+      <p>Format your words. Get everyone on the same time.<br>Make it yours, then copy it straight into Discord.</p>
+      <div class="hero-code" aria-hidden="true"><div class="code-orbit orbit-one">**make it bold**</div><div class="code-orbit orbit-two">&lt;t:1793206800:f&gt;</div><div class="code-orbit orbit-three">||a little mystery||</div><span class="hero-spark">✳</span></div>
+    </section>
+    <nav class="tool-tabs" role="tablist" aria-label="Discord tools">
+      <button id="tab-formatter" role="tab" aria-selected="true" aria-controls="panel-formatter" data-tab="formatter"><span aria-hidden="true">Aa</span> Text formatter</button>
+      <button id="tab-timestamps" role="tab" aria-selected="false" aria-controls="panel-timestamps" tabindex="-1" data-tab="timestamps"><span aria-hidden="true">◷</span> Timestamps</button>
+      <button id="tab-templates" role="tab" aria-selected="false" aria-controls="panel-templates" tabindex="-1" data-tab="templates"><span aria-hidden="true">▤</span> Templates</button>
+      <button id="tab-guide" role="tab" aria-selected="false" aria-controls="panel-guide" tabindex="-1" data-tab="guide"><span aria-hidden="true">⌘</span> Syntax guide</button>
+    </nav>
+    <div id="workspace">
+      <section id="panel-formatter" role="tabpanel" aria-labelledby="tab-formatter">
+        <div class="section-title"><div><h2>Say it with a little more style.</h2><p>Write a message, select some text, and make it stand out.</p></div><span class="pill"><span class="status-dot"></span> LIVE PREVIEW</span></div>
+        <div class="editor-grid">
+          <section class="card editor-card" aria-label="Message editor">
+            <div class="card-heading"><h3><span class="heading-icon" aria-hidden="true">⌨</span> Your message</h3><span class="muted small" id="save-status">Saved on this device</span></div>
+            <div id="toolbar" class="toolbar" role="toolbar" aria-label="Text formatting"></div>
+            <label class="sr-only" for="message">Message syntax</label>
+            <textarea id="message" spellcheck="true" placeholder="Your next great message starts here…"></textarea>
+            <div class="editor-meta"><span id="character-count">0 characters</span><span>Markdown goes in. Magic comes out.</span></div>
+            <div class="card-actions"><div class="history-actions"><button id="undo" class="icon-button" title="Undo (Ctrl/Cmd+Z)" aria-label="Undo">↶</button><button id="redo" class="icon-button" title="Redo (Ctrl/Cmd+Shift+Z)" aria-label="Redo">↷</button><button id="clear-draft" class="text-button">Clear</button></div><button id="copy-message" class="primary"><span aria-hidden="true">▢</span> Copy message</button></div>
+          </section>
+          <section class="card preview-card" aria-label="Message preview">
+            <div class="card-heading"><h3><span class="heading-icon" aria-hidden="true">◉</span> The Discord look</h3><span class="channel"># your-next-message</span></div>
+            <div class="discord-message"><div class="avatar" aria-hidden="true">✦</div><div class="message-body"><div class="author">You <span class="author-badge">LOOKING GOOD</span><span class="message-date">Today</span></div><div id="preview" class="markdown"></div></div></div>
+            <div class="preview-note"><span aria-hidden="true">ⓘ</span> An approximate preview. Discord may render some details differently.</div>
+          </section>
+        </div>
+        <div class="tip"><span class="tip-icon" aria-hidden="true">✧</span><p><strong>A little tip</strong> You can combine styles. Try <code>__**bold and underlined**__</code> for something worth noticing.</p><button class="text-button" data-switch="guide">Explore the syntax <span aria-hidden="true">↗</span></button></div>
+      </section>
+      <section id="panel-timestamps" role="tabpanel" aria-labelledby="tab-timestamps" hidden>
+        <div class="section-title"><div><h2>Your time. Everyone’s local time.</h2><p>Pick a moment. Discord handles the timezone for every reader.</p></div><span class="pill">TIME, TRANSLATED</span></div>
+        <div class="timestamp-layout"><section class="card time-controls"><div class="card-heading"><h3>Choose your moment</h3><button id="time-now" class="text-button">Use now ↗</button></div><div class="control-body">
+          <div class="input-row"><label>Date<input id="event-date" type="date" min="1970-01-01" max="9999-12-31" required></label><label>Time<input id="event-time" type="time" step="1" required></label></div>
+          <label>Timezone<input id="timezone" list="timezone-options" autocomplete="off" spellcheck="false" aria-describedby="timezone-help"><datalist id="timezone-options"></datalist></label><p id="timezone-help" class="muted small">Detected from your device. Search or type an IANA timezone.</p>
+          <div class="quick-actions"><button data-adjust="15">+15 minutes</button><button data-adjust="60">+1 hour</button><button data-adjust="day">+1 day</button></div>
+          <div id="time-error" class="field-error" role="alert" hidden></div><div id="offset-choice" hidden><label>This time occurs twice. Choose an occurrence<select id="offset-select"><option value="">Choose a UTC offset…</option></select></label></div>
+          <div class="time-explanation"><span aria-hidden="true">◷</span><p>Even “time only” refers to a particular date. Across timezones, a date can move to the previous or next day.</p></div>
+          <label>Preview as a reader in<select id="preview-zone"></select></label><p class="muted small">Previews use your browser’s language and date preferences.</p>
+        </div></section><section class="card timestamp-results"><div class="card-heading"><h3>Ready for every timezone</h3><span id="unix-value" class="muted small"></span></div><div id="timestamp-styles"></div><div class="results-footer">Choose a format, then copy it or add it to your message.</div></section></div>
+      </section>
+      <section id="panel-templates" role="tabpanel" aria-labelledby="tab-templates" hidden>
+        <div class="section-title"><div><h2>Skip the blank page.</h2><p>A few useful starting points. Add your details and make them yours.</p></div><span class="pill">READY TO REMIX</span></div><div id="templates" class="template-grid"></div>
+      </section>
+      <section id="panel-guide" role="tabpanel" aria-labelledby="tab-guide" hidden>
+        <div class="section-title"><div><h2>A few characters go a long way.</h2><p>Your quick reference for Discord’s formatting syntax.</p></div><label class="search-label"><span class="sr-only">Search syntax</span><input id="guide-search" type="search" placeholder="Search formatting…"></label></div><div id="guide" class="guide-grid"></div><p id="guide-empty" class="empty-state" hidden>No matching styles. Try “bold”, “quote”, or “code”.</p><p class="muted small">Based on <a href="https://support.discord.com/hc/en-us/articles/210298617" target="_blank" rel="noopener noreferrer">Discord’s Markdown guide ↗</a> and <a href="https://discord.com/developers/docs/reference#message-formatting" target="_blank" rel="noopener noreferrer">timestamp reference ↗</a>.</p>
+      </section>
+    </div>
+    <section class="benefits" aria-label="About this toolkit"><div><span aria-hidden="true">↗</span><p><strong>Write. Preview. Copy.</strong><small>Ready to paste into any conversation.</small></p></div><div><span aria-hidden="true">◷</span><p><strong>One moment, every timezone.</strong><small>Keep your community in sync.</small></p></div><div><span aria-hidden="true">◇</span><p><strong>Just you and your browser.</strong><small>No accounts. Everything stays here.</small></p></div></section>
+  </main>
+  <footer class="wrap site-footer"><span>Made for the messages that bring us together.</span><div><span>Independent tool. Not affiliated with Discord.</span><button id="clear-storage" class="text-button">Clear saved data</button></div></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="link-dialog"><form id="link-form"><h2>Add a link</h2><label>Link text<input id="link-label" required></label><label>Website URL<input id="link-url" type="url" placeholder="https://example.com" required></label><p id="link-error" class="field-error" hidden>Use a valid HTTP or HTTPS website URL.</p><div class="dialog-actions"><button type="button" data-close-dialog>Cancel</button><button class="primary" type="submit">Insert link</button></div></form></dialog>
+  <dialog id="confirm-dialog"><form method="dialog"><h2 id="confirm-title">Replace your draft?</h2><p id="confirm-description"></p><div class="dialog-actions"><button value="cancel">Cancel</button><button value="confirm" class="primary">Continue</button></div></form></dialog>
+  <dialog id="copy-dialog"><h2>Copy your syntax</h2><p>Automatic copying isn’t available. Select the text below and copy it.</p><label class="sr-only" for="copy-fallback">Text to copy</label><textarea id="copy-fallback" readonly></textarea><div class="dialog-actions"><button data-close-dialog>Done</button></div></dialog>
+  <noscript><p class="noscript">Please enable JavaScript to use the formatter and timestamp tools. Everything runs locally in your browser.</p></noscript>
+</body>
+</html>

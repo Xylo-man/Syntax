@@ -1,0 +1,13 @@
+{
+  "name": "discord-syntax",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A browser-local Discord formatting and timestamp toolkit. No build required.",
+  "devDependencies": { "linkedom": "0.18.12" },
+  "scripts": {
+    "test": "node --test tests/core.test.mjs",
+    "test:dom": "node --test tests/dom.test.mjs tests/app.test.mjs",
+    "serve": "python3 -m http.server 4173 --bind 127.0.0.1"
+  }
+}
